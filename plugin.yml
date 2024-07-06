@@ -1,0 +1,5 @@
+---
+name: BossApi
+version: 0.0.1
+main: Lay\BossApi\Loader
+api: 5.16.0

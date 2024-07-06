@@ -1,0 +1,10 @@
+{
+    "name": "lay/boss-api",
+    "type": "project",
+    "autoload": {
+        "classmap": ["src"]
+    },
+    "require": {
+        "paroxity/commando": "^3.2"
+    }
+}
