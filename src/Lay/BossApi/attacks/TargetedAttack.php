@@ -2,6 +2,6 @@
 
 namespace Lay\BossApi\attacks;
 
-abstract class TargetedAttack extends BaseAttack {
+abstract class TargetedAttack extends ProceduralAttack {
     
 }
