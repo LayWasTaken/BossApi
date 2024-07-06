@@ -2,11 +2,10 @@
 
 namespace Lay\BossApi\entity;
 
-use Lay\BossApi\attacks\BaseAttack;
+use Lay\BossApi\attacks\ProceduralAttack;
 use pocketmine\network\mcpe\protocol\BossEventPacket;
 use pocketmine\entity\Living;
 use pocketmine\entity\Location;
-use pocketmine\event\entity\EntityDamageEvent;
 use pocketmine\nbt\tag\CompoundTag;
 
 abstract class BossEntity extends Living{
@@ -18,7 +17,7 @@ abstract class BossEntity extends Living{
     protected bool $invulnerable = false;
     private bool $movable = true;
     private int $attackCooldown = 0;
-    private ?BaseAttack $currentAttack = null;
+    private ?ProceduralAttack $currentAttack = null;
     /**@var ProceduralAttack[] $backgroundAttacks Attacks that is happening without being disturbed*/
     private array $backgroundAttacks = [];
     
@@ -61,10 +60,10 @@ abstract class BossEntity extends Living{
     }
 
     /**
-     * @param BaseAttack $attack yield the amount of ticks to sleep the attack, if the generator reaches invalid then the attack is removed
+     * @param ProceduralAttack $attack yield the amount of ticks to sleep the attack, if the generator reaches invalid then the attack is removed
      * @param int $attackCooldown Optional, if wanted to increase the attack coooldown
      */
-    public function addBackgroundAttack(BaseAttack $attack, int $attackCooldown = 0){
+    public function addBackgroundAttack(ProceduralAttack $attack, int $attackCooldown = 0){
         $this->backgroundAttacks[] = $attack;
         $this->addAttackCooldown($attackCooldown);
         return $this;
@@ -85,7 +84,7 @@ abstract class BossEntity extends Living{
      * An attack that can have multiple delays but the attack cooldown will not be finished until the attack is finished
      * Useful for long and heavy/extensive attacks
      */
-    protected function setAwaitAttack(BaseAttack $attack){
+    protected function setAwaitAttack(ProceduralAttack $attack){
         if($this->currentAttack) return false;
         $this->currentAttack = $attack;
         return true;
